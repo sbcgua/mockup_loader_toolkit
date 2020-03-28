@@ -17,8 +17,8 @@ include zmlt_compiler_app.
 **********************************************************************
 constants:
   GC_DIR_PARAM_NAME TYPE CHAR20 VALUE 'ZMLT_COMPILER_DIR',
-  GC_OBJ_PARAM_NAME TYPE CHAR20 VALUE 'ZMLT_COMPILER_OBJ',
-  GC_INC_PARAM_NAME TYPE CHAR20 VALUE 'ZMLT_COMPILER_INC'.
+  GC_INC_PARAM_NAME TYPE CHAR20 VALUE 'ZMLT_COMPILER_INC',
+  GC_OBJ_PARAM_NAME TYPE CHAR20 VALUE 'ZMLT_MIME_OBJ'.
 
 form main using pv_srcdir pv_incdir pv_mimename pv_watch pv_rebuild.
   data lo_app type ref to lcl_app.
