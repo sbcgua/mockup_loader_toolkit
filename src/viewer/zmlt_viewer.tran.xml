@@ -17,7 +17,7 @@
    <TSTCT>
     <SPRSL>E</SPRSL>
     <TCODE>ZMLT_VIEWER</TCODE>
-    <TTEXT>Mockup editor</TTEXT>
+    <TTEXT>Mockup viewer</TTEXT>
    </TSTCT>
   </asx:values>
  </asx:abap>
