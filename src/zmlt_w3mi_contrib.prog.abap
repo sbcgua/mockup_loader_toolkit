@@ -1086,6 +1086,9 @@ class ZCL_W3MIME_ZIP_WRITER definition
         !IV_FILENAME type STRING
       raising
         ZCX_W3MIME_ERROR .
+    methods LIST
+      returning
+        value(rt_list) type string_table.
   protected section.
   private section.
 
@@ -1101,6 +1104,14 @@ ENDCLASS.
 
 CLASS ZCL_W3MIME_ZIP_WRITER IMPLEMENTATION.
 
+  method list.
+
+    field-symbols <f> like line of mo_zip->files.
+    loop at mo_zip->files assigning <f>.
+      append <f>-name to rt_list.
+    endloop.
+
+  endmethod.
 
   method add.
     data lv_xdata type xstring.
