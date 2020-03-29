@@ -31,6 +31,7 @@ The mockup compiler adds meta data to the zip archive. It is stored in `.meta` s
 2. In each file, searches for `_contents` sheet with 2 columns. The first is a name of another sheet in the workbook, the second includes the sheet into conversion if not empty. See example `test.ods` in the docs dir.
     - If `_contents` sheet was **not found** - all sheets are converted.
     - Another special sheet is `_exclude` - sheets with names listed there are excluded from conversion.
+    - Also all sheets with names starting with '-' are ignored
 3. All the listed sheets are converted into tab-delimited text files in UTF8.
     - each sheet should contain data, staring in A1 cell
     - `'_'` prefixed columns at the beginning are ignored, can be used for some meta data
