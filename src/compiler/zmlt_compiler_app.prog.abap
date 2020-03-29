@@ -218,7 +218,7 @@ class lcl_app implementation.
 *    li_excel = lcl_excel_abap2xlsx=>load( lv_blob ).
     li_excel = lcl_excel_xlreader=>load( lv_blob ).
     lt_mocks = lcl_workbook_parser=>parse( li_excel ).
-    lv_folder_name = lcl_utils=>get_uppercase_filename( iv_path ).
+    lv_folder_name = lcl_utils=>get_lowercase_filename( iv_path ).
     lv_filename    = lcl_utils=>get_full_filename( iv_path ).
 
     rv_updated = mo_meta->update(
@@ -238,7 +238,7 @@ class lcl_app implementation.
         iv_data     = <mock>-data ).
     endloop.
 
-  endmethod.  " process_excel.
+  endmethod.
 
   method process_include.
 
@@ -268,6 +268,8 @@ class lcl_app implementation.
       sub = zcl_w3mime_fs=>c_sep
       with = '/'
       occ = 0 ).
+
+    lv_relative_path = to_lower( lv_relative_path ).
 
     mo_zip->addx(
       iv_filename = lv_relative_path
@@ -311,7 +313,7 @@ class lcl_app implementation.
       endif.
     endloop.
 
-  endmethod.  " process_includes_dir.
+  endmethod.
 
   method update_mime_object.
     data lv_blob type xstring.
@@ -328,7 +330,7 @@ class lcl_app implementation.
     zcl_w3mime_storage=>update_object_x(
       iv_key  = mv_mime_key
       iv_data = lv_blob ).
-  endmethod.  " update_mime_object.
+  endmethod.
 
   method process_changed_file.
 
@@ -387,11 +389,11 @@ class lcl_app implementation.
 
     write / l_msg.
 
-  endmethod.  "handle_changed
+  endmethod.
 
   method handle_error.
     message error_text type 'E'.
-  endmethod.  " handle_error.
+  endmethod.
 
   method write_meta.
     data l_tmp type string.

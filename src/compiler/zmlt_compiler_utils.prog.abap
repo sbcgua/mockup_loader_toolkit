@@ -27,6 +27,12 @@ class lcl_utils definition final.
       returning
         value(rv_folder_name) type string.
 
+    class-methods get_lowercase_filename
+      importing
+        iv_path type string
+      returning
+        value(rv_folder_name) type string.
+
     class-methods get_full_filename
       importing
         iv_path type string
@@ -90,6 +96,15 @@ class lcl_utils implementation.
       importing
         ev_filename = rv_folder_name ).
     rv_folder_name = to_upper( rv_folder_name ).
+  endmethod.
+
+  method get_lowercase_filename.
+    zcl_w3mime_fs=>parse_path(
+      exporting
+        iv_path = iv_path
+      importing
+        ev_filename = rv_folder_name ).
+    rv_folder_name = to_lower( rv_folder_name ).
   endmethod.
 
 endclass.
