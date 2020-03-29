@@ -5,17 +5,26 @@
 class lcl_wb_parser_test_mock definition final.
   public section.
     interfaces lif_excel.
+    methods content_on importing is_on type abap_bool.
+    data mv_is_content_on type abap_bool.
 endclass.
 
 class lcl_wb_parser_test_mock implementation.
 
+  method content_on.
+    mv_is_content_on = is_on.
+  endmethod.
+
   method lif_excel~get_sheet_names.
-    append '_contents' to rt_sheet_names.
+    if mv_is_content_on = abap_true.
+      append '_contents' to rt_sheet_names.
+    endif.
     append '_exclude' to rt_sheet_names.
     append 'Sheet1' to rt_sheet_names.
     append 'Sheet2' to rt_sheet_names.
     append 'Sheet3' to rt_sheet_names.
     append 'Sheet4' to rt_sheet_names.
+    append '-Sheet5' to rt_sheet_names.
   endmethod.
 
   method lif_excel~get_sheet_content.
@@ -113,6 +122,7 @@ class ltcl_workbook_parser_test definition final for testing
     methods read_exclude for testing.
     methods integration_test for testing raising lcx_error.
     methods date_processing for testing raising lcx_error.
+    methods integration_test_with_excl for testing raising lcx_error.
 
 endclass.
 
@@ -392,6 +402,8 @@ class ltcl_workbook_parser_test implementation.
     data lo_excel_mock type ref to lcl_wb_parser_test_mock.
     create object lo_excel_mock.
 
+    lo_excel_mock->content_on( abap_true ).
+
     data lt_act type lcl_workbook_parser=>tt_mocks.
     lt_act = lcl_workbook_parser=>parse( lo_excel_mock ).
 
@@ -401,6 +413,42 @@ class ltcl_workbook_parser_test implementation.
     append initial line to lt_exp assigning <exp>.
     <exp>-name = 'Sheet1'.
     <exp>-data = 'Column1\tColumn2\nA\t1\nB\t2\nC\t3'.
+    <exp>-data = replace( val = <exp>-data sub = '\n' with = cl_abap_char_utilities=>newline occ = 0 ).
+    <exp>-data = replace( val = <exp>-data sub = '\t' with = cl_abap_char_utilities=>horizontal_tab occ = 0 ).
+
+    append initial line to lt_exp assigning <exp>.
+    <exp>-name = 'Sheet4'.
+    <exp>-data = 'A\tB\tC\tD\nVasya\t01.09.2018\t15\t1\nPetya\t02.09.2018\t16.37\t0'.
+    <exp>-data = replace( val = <exp>-data sub = '\n' with = cl_abap_char_utilities=>newline occ = 0 ).
+    <exp>-data = replace( val = <exp>-data sub = '\t' with = cl_abap_char_utilities=>horizontal_tab occ = 0 ).
+
+    cl_abap_unit_assert=>assert_equals( act = lt_act exp = lt_exp ).
+
+  endmethod.
+
+
+  method integration_test_with_excl.
+
+    data lo_excel_mock type ref to lcl_wb_parser_test_mock.
+    create object lo_excel_mock.
+
+    lo_excel_mock->content_on( abap_false ).
+
+    data lt_act type lcl_workbook_parser=>tt_mocks.
+    lt_act = lcl_workbook_parser=>parse( lo_excel_mock ).
+
+    data lt_exp type lcl_workbook_parser=>tt_mocks.
+    field-symbols <exp> like line of lt_exp.
+
+    append initial line to lt_exp assigning <exp>.
+    <exp>-name = 'Sheet1'.
+    <exp>-data = 'Column1\tColumn2\nA\t1\nB\t2\nC\t3'.
+    <exp>-data = replace( val = <exp>-data sub = '\n' with = cl_abap_char_utilities=>newline occ = 0 ).
+    <exp>-data = replace( val = <exp>-data sub = '\t' with = cl_abap_char_utilities=>horizontal_tab occ = 0 ).
+
+    append initial line to lt_exp assigning <exp>.
+    <exp>-name = 'Sheet2'.
+    <exp>-data = 'A\tB\tC\tD\nVasya\t01.09.2018\t15\t1\nPetya\t02.09.2018\t16.37\t0'.
     <exp>-data = replace( val = <exp>-data sub = '\n' with = cl_abap_char_utilities=>newline occ = 0 ).
     <exp>-data = replace( val = <exp>-data sub = '\t' with = cl_abap_char_utilities=>horizontal_tab occ = 0 ).
 

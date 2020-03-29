@@ -159,17 +159,17 @@ class lcl_workbook_parser implementation.
     read table lt_worksheets assigning <ws> with key table_line = exclude_sheet_name.
     if sy-subrc = 0.
       lt_excludes = read_exclude( ii_excel->get_sheet_content( exclude_sheet_name ) ).
-
-      " exclude sheets
-      data lv_index type sy-tabix.
-      loop at lt_sheets_to_save assigning <sheet_name>.
-        lv_index = sy-tabix.
-        read table lt_excludes with key table_line = <sheet_name> transporting no fields.
-        if sy-subrc = 0 or <sheet_name> = exclude_sheet_name.
-          delete lt_sheets_to_save index lv_index.
-        endif.
-      endloop.
     endif.
+
+    " exclude sheets
+    data lv_index type sy-tabix.
+    loop at lt_sheets_to_save assigning <sheet_name>.
+      lv_index = sy-tabix.
+      read table lt_excludes with key table_line = <sheet_name> transporting no fields.
+      if sy-subrc = 0 or <sheet_name> = exclude_sheet_name or <sheet_name>+0(1) = '-'.
+        delete lt_sheets_to_save index lv_index.
+      endif.
+    endloop.
 
     data lt_date_styles type ts_style_list.
     lt_date_styles = find_date_styles( ii_excel ).
