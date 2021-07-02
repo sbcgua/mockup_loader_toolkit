@@ -342,13 +342,17 @@ class lcl_app implementation.
     endif.
 
     data lv_is_include type abap_bool.
-    lv_is_include = zcl_w3mime_fs=>path_is_relative(
-      iv_to   = is_changed_file-path
-      iv_from = mv_include_dir ).
 
-    if mv_include_dir is not initial and lv_is_include = abap_true.
-      process_include( is_changed_file-path ).
-    else.
+    if mv_include_dir is not initial.
+      lv_is_include = zcl_w3mime_fs=>path_is_relative(
+        iv_to   = is_changed_file-path
+        iv_from = mv_include_dir ).
+      if lv_is_include = abap_true.
+        process_include( is_changed_file-path ).
+      endif.
+    endif.
+
+    if lv_is_include = abap_false.
       process_excel( is_changed_file-path ).
     endif.
 
