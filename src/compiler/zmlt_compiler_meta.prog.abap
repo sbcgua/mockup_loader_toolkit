@@ -80,17 +80,19 @@ class lcl_meta implementation.
   method update.
     field-symbols <m> like line of mt_src_ts.
     data lv_sha1 like <m>-sha1.
+    data lv_filename like iv_filename.
 
     lv_sha1 = lcl_utils=>sha1( iv_blob ).
+    lv_filename = lcl_utils=>slash( iv_filename ).
 
     read table mt_src_ts assigning <m>
       with key
         type     = iv_type
-        src_file = iv_filename .
+        src_file = lv_filename .
     if sy-subrc is not initial. " new file
       append initial line to mt_src_ts assigning <m>.
       <m>-type     = iv_type.
-      <m>-src_file = iv_filename.
+      <m>-src_file = lv_filename.
     endif.
 
 *    if <m>-timestamp <> iv_timestamp.

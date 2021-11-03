@@ -39,9 +39,21 @@ class lcl_utils definition final.
       returning
         value(rv_filename) type string.
 
+    class-methods slash
+      importing
+        iv_path type string
+      returning
+        value(rv_path) type string.
+
 endclass.
 
 class lcl_utils implementation.
+
+  method slash.
+
+    rv_path = replace( val = iv_path sub = `\` with = `/` occ = 0 ).
+
+  endmethod.
 
   method get_full_filename.
 
@@ -108,3 +120,26 @@ class lcl_utils implementation.
   endmethod.
 
 endclass.
+
+**********************************************************************
+
+class ltcl_utils definition final
+  for testing
+  risk level harmless
+  duration short.
+  private section.
+    methods slash for testing.
+endclass.
+
+class ltcl_utils implementation.
+
+  method slash.
+
+    cl_abap_unit_assert=>assert_equals(
+      act = lcl_utils=>slash( 'hello\world\include' )
+      exp = 'hello/world/include' ).
+
+  endmethod.
+
+endclass.
+
