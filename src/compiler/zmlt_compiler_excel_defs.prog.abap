@@ -10,10 +10,24 @@ endclass.
 
 class lcx_excel implementation.
   method excel_error.
+    data:
+      begin of ls_split_msg,
+        a1 like a1,
+        a2 like a1,
+        a3 like a1,
+        a4 like a1,
+      end of ls_split_msg.
+
+    ls_split_msg = msg.
+
     raise exception type lcx_excel
       exporting
+        msg = msg
         rc  = rc
-        msg = msg.
+        a1  = ls_split_msg-a1
+        a2  = ls_split_msg-a2
+        a3  = ls_split_msg-a3
+        a4  = ls_split_msg-a4.
   endmethod.
 endclass.
 

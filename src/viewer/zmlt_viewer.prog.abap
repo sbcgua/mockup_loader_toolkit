@@ -1,6 +1,5 @@
 report zmlt_viewer.
 
-include zmlt_error.
 include zmlt_w3mi_contrib.
 include zmlt_viewer_model.
 

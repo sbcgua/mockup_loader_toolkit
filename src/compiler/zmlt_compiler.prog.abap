@@ -4,7 +4,6 @@ report zmlt_compiler.
 * INCLUDES
 **********************************************************************
 
-include zmlt_error.
 include zmlt_w3mi_contrib.
 include zmlt_xlrd_contrib.
 include zmlt_compiler_utils.
