@@ -50,6 +50,7 @@ The mockup compiler adds meta data to the zip archive. It is stored in `.meta` s
 
 - date is detected by the cell format style. Potentially not 100% reliable. Also at the moment converts unconditionally to `DD.MM.YYYY` form. To be improved. Log an issue with specific example, if needed.
 - fractional numbers are not rounded. Results sometimes in values like `16.670000000000002`. Though in my *productive* test suites (which have a lot of amounts) this does not cause issues. Keep an eye.
+- texts with internal formatting may loose spaces e.g. `hello <bold>world</bold>` will probably be parsed as `helloworld`.This seems to be an inflexibility of `get_value` method in iXML SAP library. I didn't find a workaround. If you know a good way to solve it - PR or direction is welcomed.
 
 ### Sibling projects
 
