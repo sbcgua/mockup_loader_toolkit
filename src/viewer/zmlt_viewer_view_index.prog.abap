@@ -102,7 +102,7 @@ class lcl_content_view implementation.
       lo_sorts->add_sort( 'FOLDER' ).
       lo_sorts->add_sort( 'NAME' ).
     catch cx_salv_error into lx_alv.
-      lcx_error=>raise( lx_alv->get_text( ) ).
+      zcx_mlt_error=>raise( lx_alv->get_text( ) ).
     endtry.
 
     mo_alv->display( ).

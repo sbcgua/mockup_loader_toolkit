@@ -120,9 +120,9 @@ class ltcl_workbook_parser_test definition final for testing
     methods read_contents for testing.
     methods convert_sheet for testing.
     methods read_exclude for testing.
-    methods integration_test for testing raising lcx_error.
-    methods date_processing for testing raising lcx_error.
-    methods integration_test_with_excl for testing raising lcx_error.
+    methods integration_test for testing raising zcx_mlt_error.
+    methods date_processing for testing raising zcx_mlt_error.
+    methods integration_test_with_excl for testing raising zcx_mlt_error.
 
 endclass.
 
@@ -352,7 +352,7 @@ class ltcl_workbook_parser_test implementation.
 
     try .
       lt_act = lcl_workbook_parser=>read_contents( mt_dummy_contents ).
-    catch lcx_error.
+    catch zcx_mlt_error.
       cl_abap_unit_assert=>fail( 'Unexpected error' ).
     endtry.
 
@@ -370,7 +370,7 @@ class ltcl_workbook_parser_test implementation.
 
     try.
       lv_act = lcl_workbook_parser=>convert_sheet( mt_dummy_sheet ).
-    catch lcx_error.
+    catch zcx_mlt_error.
       cl_abap_unit_assert=>fail( 'Unexpected error' ).
     endtry.
 
@@ -386,7 +386,7 @@ class ltcl_workbook_parser_test implementation.
 
     try .
       lt_act = lcl_workbook_parser=>read_exclude( mt_dummy_exclude ).
-    catch lcx_error.
+    catch zcx_mlt_error.
       cl_abap_unit_assert=>fail( 'Unexpected error' ).
     endtry.
 

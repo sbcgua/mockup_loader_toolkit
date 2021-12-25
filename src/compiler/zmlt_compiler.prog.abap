@@ -43,7 +43,7 @@ form main using pv_srcdir pv_incdir pv_mimename pv_watch pv_rebuild.
         iv_do_watch = pv_watch.
     lo_app->run( ).
 
-  catch lcx_error zcx_w3mime_error into lx.
+  catch zcx_mlt_error zcx_w3mime_error into lx.
     l_str = lx->get_text( ).
     message l_str type 'E'.
   endtry.

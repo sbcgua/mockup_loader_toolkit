@@ -1,4 +1,4 @@
-class lcx_excel definition inheriting from lcx_error.
+class lcx_excel definition inheriting from zcx_mlt_error.
   public section.
     class-methods excel_error
       importing

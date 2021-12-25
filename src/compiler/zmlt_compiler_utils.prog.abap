@@ -19,7 +19,7 @@ class lcl_utils definition final.
       returning
         value(rv_hash) type hash160
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     class-methods get_uppercase_filename
       importing
@@ -94,7 +94,7 @@ class lcl_utils implementation.
         importing
           ef_hashstring = lv_hash ).
     catch cx_abap_message_digest.
-      lcx_error=>raise( 'sha1 calculation error' ).
+      zcx_mlt_error=>raise( 'sha1 calculation error' ).
     endtry.
 
     rv_hash = to_lower( lv_hash ).

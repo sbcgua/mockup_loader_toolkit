@@ -19,12 +19,12 @@ class lcl_app definition final create private.
       importing
         iv_mime_key type w3objid
       raising
-        lcx_error.
+        zcx_mlt_error.
     class-methods on_screen_output.
 
     methods run
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     methods handle_mock_selected
       for event mock_selected of lcl_content_view
@@ -55,11 +55,11 @@ class lcl_app definition final create private.
       importing
         iv_mime_key type w3objid
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     methods queue_loop
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     methods enqueue
       importing
@@ -69,19 +69,19 @@ class lcl_app definition final create private.
 
     methods show_index
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     methods show_mock
       importing
         iv_param type string
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     methods show_text
       importing
         iv_param type string
       raising
-        lcx_error.
+        zcx_mlt_error.
 
 endclass.
 
@@ -135,7 +135,7 @@ class lcl_app implementation.
         when routes-mock.
           try.
             show_mock( ls_route-param ).
-          catch lcx_error.
+          catch zcx_mlt_error.
             " probably parsing error, try displaying as text
             enqueue(
               iv_route = routes-text
@@ -235,11 +235,11 @@ class lcl_app implementation.
 
   method handle_mock_delete.
 
-*    data lx type ref to lcx_error.
+*    data lx type ref to zcx_mlt_error.
 *    data msg type string.
 *    try.
 *      mo_storage->delete_mock( mock_name ).
-*    catch lcx_error into lx.
+*    catch zcx_mlt_error into lx.
 *      msg = lx->get_text( ).
 *      message msg type 'E'.
 *    endtry.
@@ -255,13 +255,13 @@ class lcl_app implementation.
 *    data lo_text_view type ref to lcl_text_view.
 *    lo_text_view ?= mo_current_view.
 *
-*    data lx type ref to lcx_error.
+*    data lx type ref to zcx_mlt_error.
 *    data msg type string.
 *    try.
 *      mo_storage->put_mock_raw(
 *        iv_path = lo_text_view->mv_mock_name
 *        iv_mock = lo_text_view->mv_data ).
-*    catch lcx_error into lx.
+*    catch zcx_mlt_error into lx.
 *      msg = lx->get_text( ).
 *      message msg type 'E'.
 *    endtry.

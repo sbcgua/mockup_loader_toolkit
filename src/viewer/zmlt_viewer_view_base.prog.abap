@@ -1,7 +1,7 @@
 class lcl_view_base definition abstract.
   public section.
     methods display abstract
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods on_user_command abstract
       importing

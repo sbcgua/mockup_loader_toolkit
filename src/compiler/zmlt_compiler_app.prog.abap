@@ -15,10 +15,10 @@ class lcl_app definition final.
         iv_mime_key type string
         iv_rebuild  type abap_bool default abap_false
         iv_do_watch type abap_bool default abap_false
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods run
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods handle_changed for event changed of zcl_w3mime_poller importing changed_list.
     methods handle_error   for event error of zcl_w3mime_poller importing error_text.
@@ -49,34 +49,34 @@ class lcl_app definition final.
         iv_path type string
       returning
         value(rv_updated) type abap_bool
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods process_include
       importing
         iv_path type string
       returning
         value(rv_updated) type abap_bool
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods update_mime_object
       importing iv_update_mime_meta type abap_bool default abap_false
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods process_excel_dir
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods process_includes_dir
       importing
         iv_inc_dir type string
       returning value(rv_num) type i
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods write_meta
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
     methods read_meta
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
     methods start_watcher
-      raising lcx_error zcx_w3mime_error.
+      raising zcx_mlt_error zcx_w3mime_error.
 
     methods process_changed_file
       importing
@@ -84,7 +84,7 @@ class lcl_app definition final.
       returning
         value(rv_processed_filename) type string
       raising
-        lcx_error
+        zcx_mlt_error
         zcx_w3mime_error.
 
 endclass.
@@ -93,23 +93,23 @@ class lcl_app implementation.
 
   method constructor.
     if iv_mime_key is initial.
-      lcx_error=>raise( 'iv_mime_key must be specified' ). "#EC NOTEXT
+      zcx_mlt_error=>raise( 'iv_mime_key must be specified' ). "#EC NOTEXT
     endif.
 
     if iv_dir is initial.
-      lcx_error=>raise( 'iv_dir must be specified' ). "#EC NOTEXT
+      zcx_mlt_error=>raise( 'iv_dir must be specified' ). "#EC NOTEXT
     endif.
 
     if cl_gui_frontend_services=>directory_exist( iv_dir ) = abap_false.
-      lcx_error=>raise( 'source dir does not exist' ). "#EC NOTEXT
+      zcx_mlt_error=>raise( 'source dir does not exist' ). "#EC NOTEXT
     endif.
 
     if iv_include is not initial and cl_gui_frontend_services=>directory_exist( iv_include ) = abap_false.
-      lcx_error=>raise( 'include dir does not exist' ). "#EC NOTEXT
+      zcx_mlt_error=>raise( 'include dir does not exist' ). "#EC NOTEXT
     endif.
 
     if iv_include is not initial and zcl_w3mime_fs=>path_is_relative( iv_to = iv_dir iv_from = iv_include ) = abap_true.
-      lcx_error=>raise( 'iv_dir cannot be relevant to iv_include' ). "#EC NOTEXT
+      zcx_mlt_error=>raise( 'iv_dir cannot be relevant to iv_include' ). "#EC NOTEXT
     endif.
 
     data lo_zip type ref to cl_abap_zip.
@@ -243,7 +243,7 @@ class lcl_app implementation.
   method process_include.
 
     if zcl_w3mime_fs=>path_is_relative( iv_to = iv_path iv_from = mv_include_dir ) <> abap_true.
-      lcx_error=>raise( 'Unexpected include path' ).
+      zcx_mlt_error=>raise( 'Unexpected include path' ).
     endif.
 
     data lv_blob type xstring.
@@ -385,7 +385,7 @@ class lcl_app implementation.
       " Report result
       l_msg = |{ lcl_utils=>fmt_dt( <i>-timestamp ) }: { concat_lines_of( table = lt_filenames sep = ', ' ) }|.
 
-    catch lcx_error zcx_w3mime_error into lx.
+    catch zcx_mlt_error zcx_w3mime_error into lx.
       l_msg = lx->get_text( ).
       message l_msg type 'E'.
       l_msg = |Error: { l_msg }|.

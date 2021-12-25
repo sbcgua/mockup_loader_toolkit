@@ -8,7 +8,7 @@ class lcl_storage definition final.
     methods constructor
       importing
         iv_obj_name type wwwdata-objid
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods mock_list
       returning value(rt_list) type string_table.
@@ -19,33 +19,33 @@ class lcl_storage definition final.
       exporting
         er_mock   type ref to data
         et_fields type string_table
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods get_mock_raw
       importing
         iv_path type string
       returning value(rv_data) type string
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods delete_mock
       importing
         iv_path type string
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods put_mock
       importing
         iv_path type string
         iv_mock type data
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods put_mock_raw
       importing
         iv_path type string
         iv_mock type string
-      raising lcx_error.
+      raising zcx_mlt_error.
 
     methods commit
-      raising lcx_error.
+      raising zcx_mlt_error.
 
   private section.
     data mv_obj_name type wwwdata-objid.
@@ -74,7 +74,7 @@ class lcl_storage implementation.
           io_zip = lo_zip.
 
     catch zcx_w3mime_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@constructor' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@constructor' ).
     endtry.
 
   endmethod.
@@ -97,7 +97,7 @@ class lcl_storage implementation.
           e_head_fields = et_fields ).
 
     catch zcx_w3mime_error zcx_text2tab_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@get_mock' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@get_mock' ).
     endtry.
 
   endmethod.
@@ -107,7 +107,7 @@ class lcl_storage implementation.
     try.
       rv_data = mo_zip_writer->read( iv_path ).
     catch zcx_w3mime_error zcx_text2tab_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@get_mock_raw' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@get_mock_raw' ).
     endtry.
   endmethod.
 
@@ -122,7 +122,7 @@ class lcl_storage implementation.
         iv_data     = lv_data ).
 
     catch zcx_w3mime_error zcx_text2tab_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@put_mock' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@put_mock' ).
     endtry.
 
   endmethod.  " put_mock.
@@ -135,7 +135,7 @@ class lcl_storage implementation.
         iv_data     = iv_mock ).
 
     catch zcx_w3mime_error zcx_text2tab_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@put_mock_raw' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@put_mock_raw' ).
     endtry.
   endmethod.  " put_mock.
 
@@ -148,7 +148,7 @@ class lcl_storage implementation.
         iv_data = mo_zip_writer->get_blob( ) ).
 
     catch zcx_w3mime_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@commit' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@commit' ).
     endtry.
   endmethod.  " commit.
 
@@ -158,7 +158,7 @@ class lcl_storage implementation.
     try.
       mo_zip_writer->delete( iv_filename = iv_path ).
     catch zcx_w3mime_error zcx_text2tab_error into lx.
-      lcx_error=>raise( msg = lx->get_text( ) loc = '@delete_mock' ).
+      zcx_mlt_error=>raise( msg = lx->get_text( ) loc = '@delete_mock' ).
     endtry.
 
   endmethod.

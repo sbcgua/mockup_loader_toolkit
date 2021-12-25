@@ -28,7 +28,7 @@ class lcl_meta definition final create private.
       returning
         value(rv_str) type string
       raising
-        lcx_error.
+        zcx_mlt_error.
 
     methods update
       importing
@@ -39,7 +39,7 @@ class lcl_meta definition final create private.
       returning
         value(rv_has_changed) type abap_bool
       raising
-        lcx_error.
+        zcx_mlt_error.
 
   private section.
     data mt_src_ts type tt_src_timestamp.
@@ -73,7 +73,7 @@ class lcl_meta implementation.
       sort mt_src_ts by type src_file.
       rv_str = zcl_text2tab_serializer=>create( )->serialize( mt_src_ts ).
     catch zcx_text2tab_error into lx.
-      lcx_error=>raise( |Meta serialization failed: { lx->get_text( ) }| ).
+      zcx_mlt_error=>raise( |Meta serialization failed: { lx->get_text( ) }| ).
     endtry.
   endmethod.
 

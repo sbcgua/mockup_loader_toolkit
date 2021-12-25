@@ -29,7 +29,7 @@ form main using pv_mimename type w3objid.
 
   try.
     lcl_app=>start( iv_mime_key = pv_mimename ).
-  catch lcx_error zcx_w3mime_error into lx.
+  catch zcx_mlt_error zcx_w3mime_error into lx.
     l_str = lx->get_text( ).
     message l_str type 'E'.
   endtry.
