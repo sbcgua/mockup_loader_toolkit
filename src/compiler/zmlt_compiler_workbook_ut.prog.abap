@@ -30,7 +30,7 @@ class lcl_wb_parser_test_mock implementation.
   method lif_excel~get_sheet_content.
     field-symbols <i> like line of rt_content.
 
-    define _add_cell.
+    define _add_cont_cell.
       append initial line to rt_content assigning <i>.
       <i>-cell_row     = &1.
       <i>-cell_column  = &2.
@@ -42,42 +42,42 @@ class lcl_wb_parser_test_mock implementation.
 
     case iv_sheet_name.
       when '_contents'.
-        _add_cell 1 1 'Content'    'A1'  4  's'.
-        _add_cell 1 2 'SaveToText' 'B1'  4  's'.
-        _add_cell 2 1 'Sheet1'     'A2'  0  's'.
-        _add_cell 2 2 'X'          'B2'  0  's'.
-        _add_cell 3 1 'Sheet2'     'A3'  0  's'.
-        _add_cell 4 1 'Sheet3'     'A4'  0  's'.
-        _add_cell 4 2 'X'          'B4'  0  's'.
-        _add_cell 5 1 'Sheet4'     'A5'  0  's'.
-        _add_cell 5 2 'X'          'B5'  0  's'.
+        _add_cont_cell 1 1 'Content'    'A1'  4  's'.
+        _add_cont_cell 1 2 'SaveToText' 'B1'  4  's'.
+        _add_cont_cell 2 1 'Sheet1'     'A2'  0  's'.
+        _add_cont_cell 2 2 'X'          'B2'  0  's'.
+        _add_cont_cell 3 1 'Sheet2'     'A3'  0  's'.
+        _add_cont_cell 4 1 'Sheet3'     'A4'  0  's'.
+        _add_cont_cell 4 2 'X'          'B4'  0  's'.
+        _add_cont_cell 5 1 'Sheet4'     'A5'  0  's'.
+        _add_cont_cell 5 2 'X'          'B5'  0  's'.
       when '_exclude'.
-        _add_cell 1 1 'to_exclude' 'A1' 7  's'.
-        _add_cell 2 1 'Sheet3'     'A2' 0  's'.
+        _add_cont_cell 1 1 'to_exclude' 'A1' 7  's'.
+        _add_cont_cell 2 1 'Sheet3'     'A2' 0  's'.
       when 'Sheet1'.
-        _add_cell 1 1 'Column1'   'A1' 4 's'.
-        _add_cell 1 2 'Column2'   'B1' 4 's'.
-        _add_cell 2 1 'A'         'A2' 0 's'.
-        _add_cell 2 2 '1'         'B2' 5 ''.
-        _add_cell 3 1 'B'         'A3' 0 's'.
-        _add_cell 3 2 '2'         'B3' 0 ''.
-        _add_cell 4 1 'C'         'A4' 0 's'.
-        _add_cell 4 2 '3'         'B4' 0 ''.
-        _add_cell 6 1 'More_data' 'A6' 0 's'.
-        _add_cell 6 2 'to_skip'   'B6' 0 's'.
+        _add_cont_cell 1 1 'Column1'   'A1' 4 's'.
+        _add_cont_cell 1 2 'Column2'   'B1' 4 's'.
+        _add_cont_cell 2 1 'A'         'A2' 0 's'.
+        _add_cont_cell 2 2 '1'         'B2' 5 ''.
+        _add_cont_cell 3 1 'B'         'A3' 0 's'.
+        _add_cont_cell 3 2 '2'         'B3' 0 ''.
+        _add_cont_cell 4 1 'C'         'A4' 0 's'.
+        _add_cont_cell 4 2 '3'         'B4' 0 ''.
+        _add_cont_cell 6 1 'More_data' 'A6' 0 's'.
+        _add_cont_cell 6 2 'to_skip'   'B6' 0 's'.
       when others. " Sheet 2,3,4
-        _add_cell 1 1 'A'     'A1' 4 's'.
-        _add_cell 1 2 'B'     'B1' 4 's'.
-        _add_cell 1 3 'C'     'C1' 4 's'.
-        _add_cell 1 4 'D'     'D1' 4 's'.
-        _add_cell 2 1 'Vasya' 'A2' 0 's'.
-        _add_cell 2 2 '43344' 'B2' 6 ''.
-        _add_cell 2 3 '15'    'C2' 0 ''.
-        _add_cell 2 4 '1'     'D2' 0 'b'.
-        _add_cell 3 1 'Petya' 'A3' 0 's'.
-        _add_cell 3 2 '43345' 'B3' 6 ''.
-        _add_cell 3 3 '16.37' 'C3' 0 ''.
-        _add_cell 3 4 '0'     'D3' 0 'b'.
+        _add_cont_cell 1 1 'A'     'A1' 4 's'.
+        _add_cont_cell 1 2 'B'     'B1' 4 's'.
+        _add_cont_cell 1 3 'C'     'C1' 4 's'.
+        _add_cont_cell 1 4 'D'     'D1' 4 's'.
+        _add_cont_cell 2 1 'Vasya' 'A2' 0 's'.
+        _add_cont_cell 2 2 '43344' 'B2' 6 ''.
+        _add_cont_cell 2 3 '15'    'C2' 0 ''.
+        _add_cont_cell 2 4 '1'     'D2' 0 'b'.
+        _add_cont_cell 3 1 'Petya' 'A3' 0 's'.
+        _add_cont_cell 3 2 '43345' 'B3' 6 ''.
+        _add_cont_cell 3 3 '16.37' 'C3' 0 ''.
+        _add_cont_cell 3 4 '0'     'D3' 0 'b'.
     endcase.
   endmethod.
 
@@ -128,52 +128,52 @@ endclass.
 
 class ltcl_workbook_parser_test implementation.
 
-  define _add_cell.
-    cell-cell_row = &2.
-    cell-cell_column = &3.
-    cell-cell_value = &4.
-    insert cell into table &1.
-  end-of-definition.
-
   method setup.
+
+    define _add_sht_cell.
+      cell-cell_row = &2.
+      cell-cell_column = &3.
+      cell-cell_value = &4.
+      insert cell into table &1.
+    end-of-definition.
 
     data cell like line of mt_dummy_sheet.
 
-    _add_cell mt_dummy_sheet 1 1 '_idx'.
-    _add_cell mt_dummy_sheet 1 2 'col1'.
-    _add_cell mt_dummy_sheet 1 3 'col2'.
-    _add_cell mt_dummy_sheet 1 4 '_comment'.
-    _add_cell mt_dummy_sheet 1 6 'aux_col'.
+    _add_sht_cell mt_dummy_sheet 1 1 '_idx'.
+    _add_sht_cell mt_dummy_sheet 1 2 'col1'.
+    _add_sht_cell mt_dummy_sheet 1 3 'col2'.
+    _add_sht_cell mt_dummy_sheet 1 4 '_comment'.
+    _add_sht_cell mt_dummy_sheet 1 6 'aux_col'.
 
-    _add_cell mt_dummy_sheet 2 1 '1'.
-    _add_cell mt_dummy_sheet 2 2 'A'.
-    _add_cell mt_dummy_sheet 2 3 '10'.
-    _add_cell mt_dummy_sheet 2 4 'some comment'.
+    _add_sht_cell mt_dummy_sheet 2 1 '1'.
+    _add_sht_cell mt_dummy_sheet 2 2 'A'.
+    _add_sht_cell mt_dummy_sheet 2 3 '10'.
+    _add_sht_cell mt_dummy_sheet 2 4 'some comment'.
 
-    _add_cell mt_dummy_sheet 3 1 '2'.
-    _add_cell mt_dummy_sheet 3 2 'B'.
-    _add_cell mt_dummy_sheet 3 3 '20'.
+    _add_sht_cell mt_dummy_sheet 3 1 '2'.
+    _add_sht_cell mt_dummy_sheet 3 2 'B'.
+    _add_sht_cell mt_dummy_sheet 3 3 '20'.
 
-    _add_cell mt_dummy_sheet 5 2 'some excluded data'.
+    _add_sht_cell mt_dummy_sheet 5 2 'some excluded data'.
 
     " _contents
 
-    _add_cell mt_dummy_contents 1 1 'SheetName'.
-    _add_cell mt_dummy_contents 1 2 'ToSave'.
-    _add_cell mt_dummy_contents 1 3 'comment'.
-    _add_cell mt_dummy_contents 2 1 'Sheet1'.
-    _add_cell mt_dummy_contents 2 2 'X'.
-    _add_cell mt_dummy_contents 3 1 'Sheet2'.
-    _add_cell mt_dummy_contents 3 2 ''.
-    _add_cell mt_dummy_contents 4 1 'Sheet3'.
-    _add_cell mt_dummy_contents 4 2 'X'.
+    _add_sht_cell mt_dummy_contents 1 1 'SheetName'.
+    _add_sht_cell mt_dummy_contents 1 2 'ToSave'.
+    _add_sht_cell mt_dummy_contents 1 3 'comment'.
+    _add_sht_cell mt_dummy_contents 2 1 'Sheet1'.
+    _add_sht_cell mt_dummy_contents 2 2 'X'.
+    _add_sht_cell mt_dummy_contents 3 1 'Sheet2'.
+    _add_sht_cell mt_dummy_contents 3 2 ''.
+    _add_sht_cell mt_dummy_contents 4 1 'Sheet3'.
+    _add_sht_cell mt_dummy_contents 4 2 'X'.
 
     " _exclude
-    _add_cell mt_dummy_exclude 1 1 'SheetName'.
-    _add_cell mt_dummy_exclude 1 2 'Some comment'.
-    _add_cell mt_dummy_exclude 2 1 'SheetX'.
-    _add_cell mt_dummy_exclude 2 2 'comment 1'.
-    _add_cell mt_dummy_exclude 3 1 'SheetY'.
+    _add_sht_cell mt_dummy_exclude 1 1 'SheetName'.
+    _add_sht_cell mt_dummy_exclude 1 2 'Some comment'.
+    _add_sht_cell mt_dummy_exclude 2 1 'SheetX'.
+    _add_sht_cell mt_dummy_exclude 2 2 'comment 1'.
+    _add_sht_cell mt_dummy_exclude 3 1 'SheetY'.
 
   endmethod.   " setup.
 
