@@ -6,20 +6,14 @@
    <TEXT>Mockup loader toolkit compiler unit test excel</TEXT>
    <PARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>ZMLT_COMPILER_UNIT_TEST</OBJID>
      <NAME>fileextension</NAME>
      <VALUE>.zip</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>ZMLT_COMPILER_UNIT_TEST</OBJID>
      <NAME>filename</NAME>
      <VALUE>mockup_compiler_ut.zip</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>ZMLT_COMPILER_UNIT_TEST</OBJID>
      <NAME>mimetype</NAME>
      <VALUE>ZIP</VALUE>
     </WWWPARAMS>
