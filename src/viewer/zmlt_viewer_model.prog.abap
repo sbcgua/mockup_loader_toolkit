@@ -87,7 +87,7 @@ class lcl_storage implementation.
 
   method mock_format.
 
-    mi_ml->info( importing e_format = rv_format ).
+    mi_ml->info( importing e_src_format = rv_format ).
 
   endmethod.
 
