@@ -3,8 +3,6 @@ report zmlt_viewer.
 include zmlt_w3mi_contrib.
 include zmlt_viewer_model.
 
-include zmlt_viewer_utils.
-include zmlt_viewer_enabler.
 include zmlt_viewer_view_base.
 include zmlt_viewer_view_index.
 include zmlt_viewer_view_mock.

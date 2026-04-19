@@ -128,7 +128,6 @@ class lcl_app implementation.
       endif.
       delete mt_route_queue index 1.
 
-      " TODO refactor this shit
       case ls_route-route.
         when routes-index.
           show_index( ).
@@ -164,6 +163,7 @@ class lcl_app implementation.
     create object lo_content_view
       exporting
         iv_mock_name = |{ mv_mime_key }|
+        iv_format = mo_storage->mock_format( )
         it_contents = lt_mock_list.
 
     mo_current_view ?= lo_content_view.
@@ -198,14 +198,22 @@ class lcl_app implementation.
   endmethod.
 
   method show_text.
-    data lv_raw_mock type string.
+    data lv_raw_mock type xstring.
+    data lv_str type string.
+
     lv_raw_mock = mo_storage->get_mock_raw( iv_param ).
+
+    try.
+      lv_str = lcl_storage=>xstr2str( lv_raw_mock ).
+    catch zcx_mlt_error.
+      lv_str = lv_raw_mock.
+    endtry.
 
     data lo_text_view type ref to lcl_text_view.
     create object lo_text_view
       exporting
         iv_mock_name = iv_param
-        iv_data      = lv_raw_mock.
+        iv_data      = lv_str.
 
     mo_current_view ?= lo_text_view.
     set handler handle_text_save for lo_text_view.

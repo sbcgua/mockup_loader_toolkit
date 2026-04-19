@@ -10,6 +10,7 @@ class lcl_content_view definition final inheriting from lcl_view_base.
     methods constructor
       importing
         iv_mock_name type string
+        iv_format type string
         it_contents type string_table.
 
     methods display redefinition.
@@ -33,6 +34,7 @@ class lcl_content_view definition final inheriting from lcl_view_base.
   private section.
     data mt_mock_index type tt_mock_index.
     data mv_mock_name type string.
+    data mv_format type string.
 
     class-methods convert_content
       importing
@@ -57,6 +59,7 @@ class lcl_content_view implementation.
     super->constructor( ).
     mt_mock_index = convert_content( it_contents ).
     mv_mock_name = iv_mock_name.
+    mv_format    = iv_format.
   endmethod.
 
   method display.
@@ -84,7 +87,7 @@ class lcl_content_view implementation.
     data lo_display type ref to cl_salv_display_settings.
     lo_display = mo_alv->get_display_settings( ).
     lo_display->set_striped_pattern( 'X' ).
-    lo_display->set_list_header( |Mockup viewer - { mv_mock_name } index| ).
+    lo_display->set_list_header( |Mockup viewer - { mv_mock_name } [{ mv_format }] index| ).
 
     data lo_event type ref to cl_salv_events_table.
     lo_event = mo_alv->get_event( ).
